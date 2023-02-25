@@ -5,6 +5,7 @@ using UnityEngine;
 public class CodeManager : MonoBehaviour
 {
     public static CodeManager Instance{get;private set;}
+    public GameManger _gameManager;
     public void Awake()
     {   
         if(Instance != null && Instance != this)
