@@ -23,15 +23,15 @@ public class BoxController : MonoBehaviour
         Pump();
         Vector3 NewRot = new Vector3(Rot.x,Rot.y,Rot.z); 
         transform.eulerAngles = Vector3.Slerp(transform.eulerAngles,NewRot,rotTime);
-        DePump();
+        Invoke("DePump",.5f);
     }
 
     public void Pump()
     {
-        transform.DOScale(1.3f,1);
+        transform.DOScale(1.3f,.5f);
     }
 
     public void DePump(){
-        transform.DOScale(1f,1);
+        transform.DOScale(1f,.5f);
     }
 }

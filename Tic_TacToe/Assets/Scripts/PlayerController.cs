@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
     Vector3 Rot_x;
     Vector3 Rot_o;
     Vector3 Rot;
+    public int Rotation;
+    public bool iSPlayerPlaying = false;
+    public float rotSpeed = 100f;
+    RaycastHit Hit;
 
     // Start is called before the first frame update
     void Start()
@@ -19,24 +23,37 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButtonDown(0))
         {
+            iSPlayerPlaying = true;
             // Debug.Log("mouseDown");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit Hit;
+            
             if(Physics.Raycast(ray,out Hit))
             {
                 if(Hit.transform.GetComponentInParent<BoxController>() != null)
                 {
                     Debug.Log("hit");
                     //rotate cube
-                    
-                    Hit.transform.GetComponentInParent<BoxController>().Rotate(Rot_x,.9f);
+                    switch(Rotation)
+                    {
+                        case 1:// x
+                        Hit.transform.GetComponentInParent<BoxController>().Rotate(Rot_x,rotSpeed*Time.deltaTime);
+                            break;
+                        case 2:// o
+                        Hit.transform.GetComponentInParent<BoxController>().Rotate(Rot_o,rotSpeed*Time.deltaTime);
+                            break;
+                    }     
                 }
                 
             }
             Debug.DrawRay(ray.origin, ray.direction * 15,Color.black);
         }
+
+        if(Input.GetMouseButtonUp(0) && iSPlayerPlaying)
+        {
+            iSPlayerPlaying = false;
+        }   
     }
     
 
